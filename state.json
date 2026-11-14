@@ -1,1 +1,30 @@
-{}
+{
+  "last_heartbeat_date": null,
+  "last_keepalive": null,
+  "targets": {
+    "amazon": {
+      "consecutive_failures": 1,
+      "detail": "Amazon robot check page, skipped",
+      "failure_alert_sent": false,
+      "last_result": "BLOCKED",
+      "lowest_date": null,
+      "lowest_price": null,
+      "open_incident": null,
+      "price": null,
+      "reference_price": null,
+      "status": null
+    },
+    "newtral_site": {
+      "consecutive_failures": 0,
+      "detail": "Medium/Large $349.99",
+      "failure_alert_sent": false,
+      "last_result": "IN_STOCK",
+      "lowest_date": "2026-11-14",
+      "lowest_price": 349.99,
+      "open_incident": null,
+      "price": 349.99,
+      "reference_price": 349.99,
+      "status": "IN_STOCK"
+    }
+  }
+}
