@@ -1,0 +1,59 @@
+name: monitor
+
+on:
+  schedule:
+    - cron: "11 * * * *"   # hourly backup; cron-job.org triggers the real every-30-minute runs
+  workflow_dispatch:
+    inputs:
+      test_alert:
+        description: "Only send one test notification at each priority (no checks)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+# One writer of state.json at a time, shared with keepalive.yml. Queued runs wait instead of overlapping.
+concurrency:
+  group: state-writer
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run monitor
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          NTFY_SERVER: ${{ vars.NTFY_SERVER }}
+        run: |
+          if [ "${{ inputs.test_alert }}" = "true" ]; then
+            python monitor.py --test-alert
+          else
+            python monitor.py
+          fi
+
+      - name: Commit state.json if it changed
+        if: always()
+        run: |
+          if git diff --quiet -- state.json; then
+            echo "state.json unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state.json
+          git commit -m "Update monitor state"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

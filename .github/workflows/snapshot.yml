@@ -1,0 +1,57 @@
+name: snapshot
+
+# Manual only. Saves the raw JSON/HTML the monitor sees to the "snapshots" branch,
+# so test fixtures can be built from real pages. One request per target.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch each target once
+        run: |
+          mkdir -p /tmp/snap
+          python - <<'PY'
+          import time, requests, yaml
+          from checks import amazon, newtral_site
+          cfg = yaml.safe_load(open("config.yaml"))
+          t = cfg["targets"]
+          jobs = [("newtral_site.json", newtral_site.json_url(t["newtral_site"])),
+                  ("amazon.html", amazon.product_url(t["amazon"]))]
+          for i, (fname, url) in enumerate(jobs):
+              if i:
+                  time.sleep(5)
+              try:
+                  r = requests.get(url, headers={"User-Agent": cfg["user_agent"]}, timeout=cfg["timeout_seconds"])
+                  open(f"/tmp/snap/{fname}", "wb").write(r.content)
+                  print(f"{fname}: HTTP {r.status_code}, {len(r.content)} bytes")
+              except requests.RequestException as exc:
+                  print(f"{fname}: failed: {exc}")
+          PY
+
+      - name: Push to the snapshots branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan snapshots
+          git rm -rq --cached .
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp /tmp/snap/* .
+          git add -A
+          git commit -m "Snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -f origin snapshots

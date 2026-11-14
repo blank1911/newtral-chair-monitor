@@ -1,0 +1,27 @@
+# Newtral Standing-Mate chair price drop monitor. Alert only, never buys anything.
+
+user_agent: "newtral-chair-monitor/1.0 (personal alert-only price monitor; github.com/blank1911/newtral-chair-monitor)"
+timeout_seconds: 15
+
+timezone: America/Denver
+heartbeat_hour: 9            # local hour (timezone above) for the daily "Chair monitor alive" ping
+failure_alert_threshold: 3   # consecutive failed runs on one target before a warning
+min_drop_dollars: 1.00       # ignore price wiggles smaller than this
+
+# Prices on 2026-11-14 (Medium/Large, dark gray). A price below baseline_price is a "drop".
+# At or below target_price the alert goes out as urgent (priority 5).
+baseline_price: 349.99
+target_price: 300.00
+
+targets:
+  newtral_site:
+    enabled: true
+    handle: standing-mate-ergonomic-chair
+    variant_id: 41672021115013   # Medium/Large: 5'8" to 6'4"
+    # Small (5'0" to 5'8") is variant 41607819493509
+
+  amazon:
+    # May often show BLOCKED: Amazon tends to refuse requests from GitHub's servers.
+    enabled: true
+    asin: B0H3699JFY             # M/L size listing (includes anti-fatigue mat), small is B0GVS6S9RB
+    title_keyword: standing mate
