@@ -1,9 +1,9 @@
 {
-  "last_heartbeat_date": null,
+  "last_heartbeat_date": "2026-11-14",
   "last_keepalive": null,
   "targets": {
     "amazon": {
-      "consecutive_failures": 1,
+      "consecutive_failures": 2,
       "detail": "Amazon robot check page, skipped",
       "failure_alert_sent": false,
       "last_result": "BLOCKED",
