@@ -3,10 +3,10 @@
   "last_keepalive": null,
   "targets": {
     "amazon": {
-      "consecutive_failures": 21,
-      "detail": "Amazon robot check page, skipped",
+      "consecutive_failures": 22,
+      "detail": "request failed: HTTPError: 503 Server Error: Service Unavailable for url: https://www.amazon.com/dp/B0H3699JFY",
       "failure_alert_sent": true,
-      "last_result": "BLOCKED",
+      "last_result": "ERROR",
       "lowest_date": null,
       "lowest_price": null,
       "open_incident": null,
