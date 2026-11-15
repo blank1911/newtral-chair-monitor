@@ -3,10 +3,10 @@
   "last_keepalive": null,
   "targets": {
     "amazon": {
-      "consecutive_failures": 8,
-      "detail": "Amazon robot check page, skipped",
-      "failure_alert_sent": true,
-      "last_result": "BLOCKED",
+      "consecutive_failures": 0,
+      "detail": "Amazon $349.99",
+      "failure_alert_sent": false,
+      "last_result": "IN_STOCK",
       "lowest_date": "2026-11-14",
       "lowest_price": 349.99,
       "open_incident": null,
