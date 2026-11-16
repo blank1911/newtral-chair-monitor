@@ -3,10 +3,10 @@
   "last_keepalive": null,
   "targets": {
     "amazon": {
-      "consecutive_failures": 2,
-      "detail": "request failed: HTTPError: 503 Server Error: Service Unavailable for url: https://www.amazon.com/dp/B0H3699JFY",
+      "consecutive_failures": 0,
+      "detail": "Amazon $349.99",
       "failure_alert_sent": false,
-      "last_result": "ERROR",
+      "last_result": "IN_STOCK",
       "lowest_date": "2026-11-14",
       "lowest_price": 349.99,
       "open_incident": null,
