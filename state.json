@@ -3,7 +3,7 @@
   "last_keepalive": null,
   "targets": {
     "amazon": {
-      "consecutive_failures": 36,
+      "consecutive_failures": 37,
       "detail": "Amazon robot check page, skipped",
       "failure_alert_sent": true,
       "last_result": "BLOCKED",
