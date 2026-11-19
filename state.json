@@ -3,15 +3,15 @@
   "last_keepalive": null,
   "targets": {
     "amazon": {
-      "consecutive_failures": 33,
-      "detail": "Amazon robot check page, skipped",
-      "failure_alert_sent": true,
-      "last_result": "BLOCKED",
-      "lowest_date": "2026-11-14",
-      "lowest_price": 349.99,
+      "consecutive_failures": 0,
+      "detail": "Amazon $279.99",
+      "failure_alert_sent": false,
+      "last_result": "IN_STOCK",
+      "lowest_date": "2026-11-19",
+      "lowest_price": 279.99,
       "open_incident": null,
-      "price": 349.99,
-      "reference_price": 349.99,
+      "price": 279.99,
+      "reference_price": 279.99,
       "status": "IN_STOCK"
     },
     "newtral_site": {
